@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>DOK - Controle de Conversão</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; padding: 20px; color: #333; }
+        .container { background: white; max-width: 850px; margin: 0 auto; border: 1.5px solid #000; padding: 25px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        
+        /* Cabeçalho Identidade Visual */
+        .header { display: flex; justify-content: space-between; border-bottom: 4px solid #48b087; padding-bottom: 10px; margin-bottom: 20px; }
+        .logo { font-size: 35px; font-weight: 900; color: #444; line-height: 0.9; }
+        .logo span { color: #48b087; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
+        .titulo-doc { text-align: right; color: #48b087; font-weight: bold; }
+        .titulo-doc h1 { margin: 0; font-size: 18px; text-transform: uppercase; }
+        .titulo-doc h2 { margin: 0; font-size: 24px; font-weight: 900; }
+
+        /* Tabelas e Inputs */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        td { border: 1px solid #000; padding: 10px; font-size: 14px; }
+        input[type="text"], input[type="date"], input[type="number"] { width: 100%; border: none; outline: none; background: transparent; font-size: 14px; }
+        
+        /* Seção de Conversão */
+        .banner-indicadores { background: #48b087; color: white; text-align: center; font-weight: 900; padding: 8px; border: 1px solid #000; text-transform: uppercase; }
+        .check-table th { border: 1px solid #000; padding: 8px; background: #f9f9f9; font-size: 12px; }
+        .check-table td { text-align: center; height: 40px; }
+        input[type="checkbox"] { transform: scale(1.5); cursor: pointer; }
+
+        /* Campos de Texto */
+        .label-texto { display: block; margin-top: 15px; font-weight: bold; font-size: 13px; }
+        textarea { width: 100%; height: 50px; border: none; border-bottom: 1px solid #000; outline: none; resize: none; margin-bottom: 10px; padding: 5px; }
+
+        .btn-enviar { background: #48b087; color: white; border: none; padding: 15px; font-size: 18px; font-weight: bold; cursor: pointer; width: 100%; border-radius: 4px; margin-top: 10px; transition: 0.3s; }
+        .btn-enviar:hover { background: #3a8e6d; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <form id="formClinica">
+        <div class="header">
+            <div class="logo">DOK<br><span>Hospital Veterinário</span></div>
+            <div class="titulo-doc">
+                <h1>Controle de Conversão Clínica</h1>
+                <h2>Hospital Veterinário</h2>
+            </div>
+        </div>
+
+        <table>
+            <tr>
+                <td style="width: 40%;">Paciente: <input type="text" name="paciente" required></td>
+                <td style="width: 20%;">Peso (kg): <input type="number" step="0.1" name="peso"></td>
+                <td style="width: 40%;">Data: <input type="date" name="data_atendimento" required></td>
+            </tr>
+            <tr>
+                <td colspan="2">Tutor: <input type="text" name="tutor"></td>
+                <td>Espécie: <input type="text" name="especie" placeholder="Cão, Gato..."></td>
+            </tr>
+            <tr>
+                <td colspan="2">Plano: <input type="text" name="plano"></td>
+                <td>Raça: <input type="text" name="raca"></td>
+            </tr>
+        </table>
+
+        <div class="banner-indicadores">Indicadores de Conversão</div>
+        <table class="check-table">
+            <tr>
+                <th>Cirurgia</th>
+                <th>Internação</th>
+                <th>Aplicação</th>
+                <th>Vacina</th>
+                <th>Laboratório</th>
+                <th>Imagem</th>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="cirurgia"></td>
+                <td><input type="checkbox" name="internacao"></td>
+                <td><input type="checkbox" name="aplicacao"></td>
+                <td><input type="checkbox" name="vacina"></td>
+                <td><input type="checkbox" name="laboratorio"></td>
+                <td><input type="checkbox" name="imagem"></td>
+            </tr>
+        </table>
+
+        <span class="label-texto">Conduta clínica / suspeita diagnóstica:</span>
+        <textarea name="conduta"></textarea>
+
+        <span class="label-texto">Exames sugeridos, mas não realizados:</span>
+        <textarea name="exames_sugeridos"></textarea>
+
+        <button type="submit" class="btn-enviar">REGISTRAR ATENDIMENTO</button>
+    </form>
+</div>
+
+<script>
+    // --- COLE O LINK DA GOOGLE ABAIXO ---
+    const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbzwVOjLcWg5RtpbPEswyPvF8PPPtlmJiXx9s_3ITTptfgXIWaWytYNTUZbq3i9w3Rxb/exec";
+
+    document.getElementById('formClinica').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.innerText = "Sincronizando com BI...";
+        btn.disabled = true;
+
+        const formData = new FormData(this);
+        const d = {};
+        
+        formData.forEach((value, key) => {
+            // Lógica Binária para o BI (1 para Sim, 0 para Não)
+            if (this[key] && this[key].type === 'checkbox') {
+                d[key] = this[key].checked ? 1 : 0;
+            } else {
+                d[key] = value;
+            }
+        });
+
+        fetch(URL_APPS_SCRIPT, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(d)
+        }).then(() => {
+            alert("Dados registrados! Pronto para análise no Power BI.");
+            this.reset();
+            btn.innerText = "REGISTRAR ATENDIMENTO";
+            btn.disabled = false;
+        }).catch(err => {
+            alert("Erro na conexão. Verifique a URL do Script.");
+            btn.disabled = false;
+        });
+    });
+</script>
+
+</body>
+</html>
