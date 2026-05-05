@@ -3,86 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOK - Acompanhamento de Produtividade</title>
+    <title>DOK - Registro de Produtividade</title>
     <style>
-        :root {
-            --cor-fundo-dok: #f8f9f9; 
-            --verde-dok: #48b087;
-        }
-
-        body { 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            background-color: var(--cor-fundo-dok); 
-            padding: 20px; 
-            color: #333; 
-        }
-
-        .container { 
-            background-color: var(--cor-fundo-dok); 
-            max-width: 850px; 
-            margin: 0 auto; 
-            border: 1.5px solid #000; 
-            padding: 25px; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05); 
-        }
-        
-        .header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 4px solid var(--verde-dok); 
-            padding-bottom: 15px; 
-            margin-bottom: 20px; 
-        }
-
+        :root { --cor-fundo-dok: #f8f9f9; --verde-dok: #48b087; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--cor-fundo-dok); padding: 20px; color: #333; }
+        .container { background-color: var(--cor-fundo-dok); max-width: 850px; margin: 0 auto; border: 1.5px solid #000; padding: 25px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--verde-dok); padding-bottom: 15px; margin-bottom: 20px; }
         .logo-oficial { max-width: 280px; height: auto; }
         .titulo-doc { text-align: right; color: var(--verde-dok); }
-        .titulo-doc h1 { margin: 0; font-size: 16px; text-transform: uppercase; color: #444; letter-spacing: 1px; }
         .titulo-doc h2 { margin: 0; font-size: 20px; font-weight: 900; }
-        
         table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
         td { border: 1px solid #000; padding: 10px; font-size: 14px; }
-        input[type="text"], input[type="date"], input[type="number"], select { 
-            width: 100%; border: none; outline: none; background: transparent; font-size: 14px; box-sizing: border-box; 
-        }
-        
-        .banner-secao { 
-            background: var(--verde-dok); 
-            color: white; 
-            text-align: center; 
-            font-weight: 900; 
-            padding: 8px; 
-            border: 1px solid #000; 
-            text-transform: uppercase; 
-            margin-top: 10px; 
-        }
-        
+        input, select, textarea { width: 100%; border: none; outline: none; background: transparent; font-size: 14px; box-sizing: border-box; font-family: inherit; }
+        .banner-secao { background: var(--verde-dok); color: white; text-align: center; font-weight: 900; padding: 8px; border: 1px solid #000; text-transform: uppercase; margin-top: 10px; }
         .check-table th { border: 1px solid #000; padding: 8px; background: rgba(0,0,0,0.03); font-size: 12px; text-transform: uppercase; }
         .check-table td { text-align: center; height: 45px; }
         input[type="checkbox"] { transform: scale(1.6); cursor: pointer; }
-        
         .label-texto { display: block; margin-top: 15px; font-weight: bold; font-size: 13px; text-transform: uppercase; color: #555; }
-        textarea { 
-            width: 100%; height: 60px; border: 1px solid #000; background: transparent; outline: none; resize: none; margin-bottom: 10px; padding: 8px; font-family: inherit; 
-        }
-
-        .btn-enviar { 
-            background: var(--verde-dok); 
-            color: white; 
-            border: none; 
-            padding: 18px; 
-            font-size: 18px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            width: 100%; 
-            border-radius: 4px; 
-            margin-top: 15px; 
-            transition: 0.3s; 
-            text-transform: uppercase; 
-        }
-        .btn-enviar:hover { background: #3a8e6d; filter: brightness(0.9); }
-        
-        select:disabled { cursor: not-allowed; color: #999; }
+        textarea { height: 60px; border: 1px solid #000; padding: 8px; resize: none; }
+        .btn-enviar { background: var(--verde-dok); color: white; border: none; padding: 18px; font-size: 18px; font-weight: bold; cursor: pointer; width: 100%; border-radius: 4px; margin-top: 15px; text-transform: uppercase; transition: 0.3s; }
+        .btn-enviar:hover { background: #3a8e6d; }
     </style>
 </head>
 <body>
@@ -90,12 +30,8 @@
 <div class="container">
     <form id="formClinica">
         <div class="header">
-            <img src="https://lh3.googleusercontent.com/d/1k2nS1fibAd8eX25SAueMB-fvkoxLMKQS" alt="DOK Hospital Veterinário" class="logo-oficial">
-            
-            <div class="titulo-doc">
-                <h1>Acompanhamento de Produtividade</h1>
-                <h2>Registro de Atendimento</h2>
-            </div>
+            <img src="https://lh3.googleusercontent.com/d/1k2nS1fibAd8eX25SAueMB-fvkoxLMKQS" alt="DOK Hospital" class="logo-oficial">
+            <div class="titulo-doc"><h2>Registro de Atendimento</h2></div>
         </div>
 
         <table>
@@ -118,12 +54,7 @@
         <table class="check-table">
             <thead>
                 <tr>
-                    <th>Cirurgia</th>
-                    <th>Internação</th>
-                    <th>Aplicação</th>
-                    <th>Vacina</th>
-                    <th>Laboratório</th>
-                    <th>Imagem</th>
+                    <th>Cirurgia</th><th>Internação</th><th>Aplicação</th><th>Vacina</th><th>Laboratório</th><th>Imagem</th>
                 </tr>
             </thead>
             <tbody>
@@ -149,7 +80,7 @@
                 <td style="width: 50%;">
                     <strong>Unidade DOK:</strong>
                     <select name="unidade" id="unidade" required onchange="atualizarVeterinarios()">
-                        <option value="">Selecione a Unidade...</option>
+                        <option value="">Selecione...</option>
                         <option value="DOK Guarulhos">DOK Guarulhos</option>
                         <option value="DOK Maceió">DOK Maceió</option>
                         <option value="DOK RJ">DOK RJ</option>
@@ -158,9 +89,9 @@
                     </select>
                 </td>
                 <td style="width: 50%;">
-                    <strong>Veterinário Responsável:</strong>
+                    <strong>Veterinário:</strong>
                     <select name="veterinario" id="veterinario" required disabled>
-                        <option value="">Selecione a Unidade primeiro...</option>
+                        <option value="">Aguardando Unidade...</option>
                     </select>
                 </td>
             </tr>
@@ -171,69 +102,63 @@
 </div>
 
 <script>
-    // Sua URL oficial integrada
     const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbzwVOjLcWg5RtpbPEswyPvF8PPPtlmJiXx9s_3ITTptfgXIWaWytYNTUZbq3i9w3Rxb/exec";
 
-    // Dados extraídos do arquivo "Base Vets atualizada (1).xlsx"
     const vetsData = {
         "DOK Guarulhos": ["AMANDA CLARO", "ANDRE RUFINO DE OLIVEIRA", "BEATRIZ ANDREOLLI TEZINHO", "BLOCO CIRÚRGICO", "DR CLAUDINEY PINTO DE MORAES", "DR CRISTIAN DE OLIVEIRA ANDRADE SILVEIRA", "DR DANILO PICCININI", "DR FABIO DA SILVA CHAVIER", "DR FERNANDO LUIZ ZANONI", "DR GUILHERME AUGUSTO BRUNELLI DA SILVA", "DR RAFAEL BARBOSA CANGUSSU", "DR RAFAEL DA COSTA LOPES DA SILVA", "DR RENATO DALCIN SEGALA", "DRA ALICE GOMES DE LIMA", "DRA ANA LUIZA ALVES", "DRA ARYANE CHIARELLA VALE", "DRA BARBARA LEONETTI COSTA", "DRA BEATRIZ GAMBARINI FIRMINO", "DRA BRUNA SIQUEIRA CAMPOS", "DRA DENISE PARLAMENTO", "DRA EMILLY VITTORIA RODRIGUES DE SOUZA", "DRA GABRIELA ADAM", "DRA GABRIELLE BATISTA GOMES", "DRA GABRIELLE FERREIRA FUSAITE", "DRA JULIANA GORGONE", "DRA JULIANA PETRUSCKE LACERDA", "DRA JULIE SANTOS DE OLIVEIRA", "DRA KAREN ZIEGLITZ PEIXOTO", "DRA KAROLINE MAIA DE SOUZA", "DRA KÁTIA SOUZA CERQUEIRA", "DRA MARIA LUIZA OLIVEIRA", "DRA MARIANA ARAUJO PEREIRA", "DRA MONISE RAMALHO MORENO", "DRA NARA ELENA", "DRA PATRICIA DE LIMA", "DRA PAULA EMANUELLE DE SOUZA", "DRA PRISCILA CRISTIANE RIBEIRO", "DRA RAQUEL DOMINGUES ROLLO", "DRA THAILLA DOS SANTOS", "EDUARDA OLIVEIRA LOPES ALVES", "GABRIELA COELHO GONZALES", "GABRIELLY KAORI HACHIYA KUMIYOSHI", "GILIANE FREIRE NASCIMENTO FERNANDES", "GISLAINE SANTOS DA SILVA", "IZABEL CESAR NETA", "JOAO VITOR SILVA", "LETICIA AMARO BARBOSA", "MARIANA SANTOS FRAGA", "NICOLLE CHAVES DOS SANTOS SILVA", "RICARDO VIEIRA", "TATIANE", "VETERINARIO EXTERNO"],
         "DOK Maceió": ["ADRYENE ADONIRAN LOPES DOS SANTOS", "DR ARTHUR MACARIO LOPES", "DR ARTUR EUSTÁQUIO DA SILVA", "DR CRISTIAN DE OLIVEIRA ANDRADE SILVEIRA", "DR FELIPE JOSÉ DE O. DA SILVA", "DR HALLEF TROVÃO", "DR LEONARDO SOARES", "DR LUCAS EMIDIO DA SILVA", "DR LUCAS SANTOS ANDRADE", "DR RENA TAVARES DOS SANTOS", "DR ROBERTO ROMULO FERREIRA", "DR TIAGO BARBALHO LIMA", "DRA ALANA MARIA TAVARES BARROS", "DRA ALESKA LIMA", "DRA ALICE TORRES BARROS", "DRA AMANDA DANYELA SANTOS DE MENDONÇA", "DRA BRUNA COSTA DA GAMA", "DRA CARLA DANIELA CORREIA", "DRA CIHNDY KELLY", "DRA CIHNDY KELLY BIANQUINI", "DRA DANIELA DA SILVA LIRA", "DRA DILÂNIA RAFAELA RIBEIRO DA SILVA", "DRA ELORA SOPHIE KUPLER", "DRA ELYSE VIANA DE MELO", "DRA FERLANE LEINA VIEIRA DE ALMEIDA", "DRA FRANCINE GUIMARES", "DRA INGRID SOUZA FERREIRA DE LIMA", "DRA ISABEL CRISTINA DOS SANTOS", "DRA JESSICA LAYANE", "DRA KAROLINE SILVA", "DRA KATIA LEGNAME MARQUES", "DRA LORENA SODRE", "DRA MARIA CLARA CARLOS DA SILVA", "DRA NATALIA TIBURCIO DE ARAUJO", "DRA PRISCELY CERQUEIRA ROCHA VILELA", "DRA RAYULE CRISTINA RIBEIRO LOPES", "DRA VITORIA CRISTINA SILVA", "DRA WELLYDA LOURRANNY", "ITALO RAFAEL FERREIRA LEITE", "MARIA EDUARDA SOARES SILVA", "PAULA PATRICIA DE SANT", "TATIANA FERNANDES DE LIMA", "VITÓRIA CRISTINA SILVA"],
         "DOK RJ": ["CATARINNE CARVALHO", "DR DANIEL FEDERICI", "DR EDUARDO MAIA AGUIAR", "DR FERNANDO ELISIO AMARAL TORRES", "DR GUSTAVO PARREIRAS", "DR LEONARDO MACHADO", "DR LEONARDO OLIVEIRA", "DR MARCELO MAZZA", "DR MARCOS FELIPE RIBEIRO MENEZES", "DR RAFAEL CARVALHO", "DR RODOLFO BETTIO PIRES DE CAMARGO", "DR RODRIGO PEREIRA DA COSTA DUARTE", "DR THIAGO GOMES PINTO", "DR TIAGO GOMES DA SILVA", "DRA ALANA LUIZA DA SILVA SANTOS", "DRA AMANDA LEICHSENRING", "DRA ANA CAROLINA LOPES", "DRA ANDRESSA MALTA BRAULE", "DRA BARBARA RODRIGUES SENRA", "DRA BRUNA LACAYO", "DRA CAROLINA DO VALLE", "DRA CAROLINA PEREIRA", "DRA CAROLINA SANTANNA", "DRA CAROLINA SEIXAS", "DRA CLARISSA MARTINS", "DRA CRISTIANI LUCIA", "DRA DEBORAH DOS SANTOS", "DRA HELENA DUARTE TEIXEIRA", "DRA ISABELA SCALIONI GIJSEN", "DRA JEANE CAROLINE CORREA PETIT", "DRA JESSICA RIBEIRO ALVES", "DRA JULIA AMARAL PIOLLA REGO", "DRA JULIA FERNANDES PEDRO", "DRA JULIA SAISSE VALLE REGO SILVA", "DRA JULIANA BISAGNI PUIG", "DRA KARINE KLEINE FIGUEIREDO DOS SANTOS", "DRA LARISSA ALVES DO NASCIMENTO", "DRA LARISSA GOMES PEDRO", "DRA LARISSA MARRY PCHEVUZINSKE", "DRA LETICIA LABRE DE MELO", "DRA LIGIA SOUZA ASSUMPCAO", "DRA LUIZA CARRARINI", "DRA MARCELLA SEIXAS DA SILVA", "DRA MARCIA SIQUEIRA LIMA", "DRA MARIANA LOPES FONTES", "DRA RAYSSA DIAS FALEIRO", "DRA TAISA RIBEIRO DUARTE", "DRA THAISSA DA ROCHA KALIL", "DRA THAYSE DA SILVA MACHADO", "DRA URSULA RAQUEL DO CARMO FONSECA DA SILVA", "DRA YASMIN ABI-CHAHIN", "KARLA VASCONCELOS", "LAURA PASSOS PAULINO", "MARIA EDUARDA MARINHO", "MATHEUS PRUDENCIO", "NICHOLAS MEDEIROS", "PRISCYLLA MARTINS RIBEIRO DA ROCHA VIEIRA", "ROSANGELA ESTELITO", "TAINA FERNANDES", "WENDEL VIEIRA"],
         "DOK Recife": ["ALEXANDRA SARAH DE OLIVEIRA", "ANA HELLEN ANDRADE FERREIRA", "ARTHUR LOPES", "CARLA KAROLAYNE", "DEBORAH CAVALCANTE DE ALIANÇA LIMA", "DR ELTON HUGO LIMA SILVA", "DR ELTON MEDEIROS", "DR LUAN ALEKSANDER ANGELO SILVA", "DR LUCAS COELHO", "DR NELSON VIEIRA DOS SANTOS NETO", "DR PEDRO HENRIQUE GALVAO PACHECO", "DR RICARDO MACHADO FERRAZ", "DR VITOR MARQUES DE FRANÇA", "DR WAGNER WESLEY ARAUJO ANDRADE", "DRA ALEXSANDRA SILVA DE PAULA", "DRA ALINE HELENA ALBUQUERQUE", "DRA AMANDA LIMA", "DRA AMANDA PINA DOS SANTOS", "DRA ANA RITA PEDROSA", "DRA ANNIE CAROLINE TENORIO FERREIRA DE LIMA", "DRA ANTONELLA ESPIUCA DOS ANJOS", "DRA DANIELLE RITO PEREIRA", "DRA JULIANA PLUBIA CORDEIRO", "DRA KALININ PACHECO DOS SANTOS SILVA", "DRA LETICIA MAXMIANO BEZERRA DE SIQUEIRA", "DRA LORENA SODRE", "DRA LUIZA CARVALHO DE SOARES", "DRA MARIA EDUARDA DO NASCIMENTO PESSOA", "DRA MAYSA SECI SOARES MUNIZ", "DRA WANESSA NATHALIA DE LIMA ALMEIDA", "ELAINE CRISTINA REIS", "ELIEL DO NASCIMENTO", "ISABELA GILENA LINS DOS SANTOS", "JOELENE GERONCIO", "KASSIA RIBEIRO DE FRANCA", "MANUELA DUQUE", "MARCIA MICHELE MIRANDA", "MARIA JANAINA DOS SANTOS", "QUÉZIA VICTÓRIA AMORIM GONÇALVES DA SILVA"],
-        "DOK São Luís": ["DR ARTHUR MACARIO LOPES", "DR CARLOS EDUARDO", "DR CRISTIAN DE OLIVEIRA ANDRADE SILVEIRA", "DR HALLEF TROVÃO", "DR TIAGO BARBALHO LIMA", "DR. PEDRO HENRIQUE SANTOS AGUIAR", "DRA  ALCYAJRA COSTA", "DRA ALANA SALDANHA", "DRA ALESKA LIMA", "DRA ALESSANDRA LIMA", "DRA ALINE JOANE BRITO PADILHA", "DRA ANA PAULA RODRIGUES", "DRA BEATRIZ DE AGUIAR NEVES SILVA", "DRA BEATRIZ FERREIRA SANTOS", "DRA DAYSE DE LIMA", "DRA ELORA SOPHIE KUPLER", "DRA GABRIELA JACIREMA", "DRA JATYNA CASTRO", "DRA JAYANNA MAIA", "DRA KAROLINE SILVA", "DRA LORENA SODRE", "DRA RAYULE CRISTINA RIBEIRO LOPES", "DRA THAIS BASTOS", "DRA VALERIA GONÇALVES SOARES", "DRA VITORIA CRISTINA FRAZAO FEITOSA", "KAIO LUCAS SILVA RAPOSO", "KARLA MARIANA BRITO MENDES", "LAURA PASSOS PAULINO", "VANESSA CAROLINA SERRA DOS SANTOS"]
+        "DOK São Luís": ["DR ARTHUR MACARIO LOPES", "DR CARLOS EDUARDO", "DR CRISTIAN DE OLIVEIRA ANDRADE SILVEIRA", "DR HALLEF TROVÃO", "DR TIAGO BARBALHO LIMA", "DR. PEDRO HENRIQUE SANTOS AGUIAR", "DRA ALCYAJRA COSTA", "DRA ALANA SALDANHA", "DRA ALESKA LIMA", "DRA ALESSANDRA LIMA", "DRA ALINE JOANE BRITO PADILHA", "DRA ANA PAULA RODRIGUES", "DRA BEATRIZ DE AGUIAR NEVES SILVA", "DRA BEATRIZ FERREIRA SANTOS", "DRA DAYSE DE LIMA", "DRA ELORA SOPHIE KUPLER", "DRA GABRIELA JACIREMA", "DRA JATYNA CASTRO", "DRA JAYANNA MAIA", "DRA KAROLINE SILVA", "DRA LORENA SODRE", "DRA RAYULE CRISTINA RIBEIRO LOPES", "DRA THAIS BASTOS", "DRA VALERIA GONÇALVES SOARES", "DRA VITORIA CRISTINA FRAZAO FEITOSA", "KAIO LUCAS SILVA RAPOSO", "KARLA MARIANA BRITO MENDES", "LAURA PASSOS PAULINO", "VANESSA CAROLINA SERRA DOS SANTOS"]
     };
 
     function atualizarVeterinarios() {
         const unidade = document.getElementById('unidade').value;
         const vetSelect = document.getElementById('veterinario');
         vetSelect.innerHTML = '<option value="">Selecione o Veterinário...</option>';
-        
         if (unidade && vetsData[unidade]) {
             vetSelect.disabled = false;
             vetsData[unidade].forEach(nome => {
                 let opt = document.createElement('option');
-                opt.value = nome;
-                opt.innerHTML = nome;
+                opt.value = nome; opt.innerHTML = nome;
                 vetSelect.appendChild(opt);
             });
         } else {
             vetSelect.disabled = true;
-            vetSelect.innerHTML = '<option value="">Selecione a Unidade primeiro...</option>';
+            vetSelect.innerHTML = '<option value="">Aguardando Unidade...</option>';
         }
     }
 
     document.getElementById('formClinica').addEventListener('submit', function(e) {
         e.preventDefault();
         const btn = document.getElementById('btnSubmit');
-        btn.innerText = "Sincronizando...";
-        btn.disabled = true;
+        btn.innerText = "Sincronizando..."; btn.disabled = true;
 
         const formData = new FormData(this);
-        const dataFinal = {};
+        const params = new URLSearchParams();
         
         formData.forEach((value, key) => {
             const el = this.querySelector(`[name="${key}"]`);
             if (el && el.type === 'checkbox') {
-                dataFinal[key] = el.checked ? 1 : 0;
+                params.append(key, el.checked ? 1 : 0);
             } else {
-                dataFinal[key] = value;
+                params.append(key, value);
             }
         });
 
         fetch(URL_APPS_SCRIPT, {
             method: 'POST',
             mode: 'no-cors',
-            body: JSON.stringify(dataFinal)
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params.toString()
         }).then(() => {
             alert("Sucesso! Registro efetuado na base DOK.");
             this.reset();
             document.getElementById('veterinario').disabled = true;
-            btn.innerText = "REGISTRAR ATENDIMENTO";
-            btn.disabled = false;
+            btn.innerText = "REGISTRAR ATENDIMENTO"; btn.disabled = false;
         }).catch(err => {
             alert("Erro na conexão.");
-            btn.innerText = "TENTAR NOVAMENTE";
-            btn.disabled = false;
+            btn.innerText = "TENTAR NOVAMENTE"; btn.disabled = false;
         });
     });
 </script>
