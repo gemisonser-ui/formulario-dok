@@ -35,12 +35,11 @@
             <div class="titulo-doc"><h2>Registro de Atendimento</h2></div>
         </div>
 
-        <!-- IDENTIFICAÇÃO DO PROFISSIONAL (AGORA EM PRIMEIRO) -->
         <table style="margin-bottom: 15px;">
             <tr>
                 <td style="width: 50%;">
                     <strong>Unidade DOK:</strong>
-                    <select name="unidade" id="unidade" required onchange="atualizarVeterinarios()">
+                    <select name="unidade" id="unidade" required onchange="atualizarFiltros()">
                         <option value="">Selecione...</option>
                         <option value="DOK Guarulhos">DOK Guarulhos</option>
                         <option value="DOK Maceió">DOK Maceió</option>
@@ -58,7 +57,6 @@
             </tr>
         </table>
 
-        <!-- DADOS DO PACIENTE -->
         <table>
             <tr>
                 <td style="width: 40%;"><strong>Paciente:</strong> <input type="text" name="paciente" required></td>
@@ -79,7 +77,12 @@
             </tr>
             <tr>
                 <td colspan="2"><strong>Raça:</strong> <input type="text" name="raca"></td>
-                <td><strong>Plano:</strong> <input type="text" name="plano"></td>
+                <td>
+                    <strong>Plano:</strong>
+                    <select name="plano" id="plano" required disabled>
+                        <option value="">Aguardando Unidade...</option>
+                    </select>
+                </td>
             </tr>
         </table>
 
@@ -123,9 +126,20 @@
         "DOK São Luís": ["DR ARTHUR MACARIO LOPES", "DR CARLOS EDUARDO", "DR CRISTIAN DE OLIVEIRA ANDRADE SILVEIRA", "DR HALLEF TROVÃO", "DR TIAGO BARBALHO LIMA", "DR. PEDRO HENRIQUE SANTOS AGUIAR", "DRA ALCYAJRA COSTA", "DRA ALANA SALDANHA", "DRA ALESKA LIMA", "DRA ALESSANDRA LIMA", "DRA ALINE JOANE BRITO PADILHA", "DRA ANA PAULA RODRIGUES", "DRA BEATRIZ DE AGUIAR NEVES SILVA", "DRA BEATRIZ FERREIRA SANTOS", "DRA DAYSE DE LIMA", "DRA ELORA SOPHIE KUPLER", "DRA GABRIELA JACIREMA", "DRA JATYNA CASTRO", "DRA JAYANNA MAIA", "DRA KAROLINE SILVA", "DRA LORENA SODRE", "DRA RAYULE CRISTINA RIBEIRO LOPES", "DRA THAIS BASTOS", "DRA VALERIA GONÇALVES SOARES", "DRA VITORIA CRISTINA FRAZAO FEITOSA", "KAIO LUCAS SILVA RAPOSO", "KARLA MARIANA BRITO MENDES", "LAURA PASSOS PAULINO", "VANESSA CAROLINA SERRA DOS SANTOS"]
     };
 
-    function atualizarVeterinarios() {
+    // LISTA ATUALIZADA CONFORME IMAGEM OFICIAL
+    const planosData = {
+        "DOK Guarulhos": ["Au happy", "Eu pet", "Dog life", "Pet love", "Pet life", "Particular"],
+        "DOK São Luís": ["Petlove", "Pet mais vida", "Particular"],
+        "DOK Recife": ["Pet Top", "Eu Pet", "Particular"],
+        "DOK Maceió": ["Petlove", "Care Saúde Animal", "Pet Top", "Eu Pet", "Particular"],
+        "DOK RJ": ["Particular"] // Unidade não listada na imagem, mantendo padrão
+    };
+
+    function atualizarFiltros() {
         const unidade = document.getElementById('unidade').value;
         const vetSelect = document.getElementById('veterinario');
+        const planoSelect = document.getElementById('plano');
+
         vetSelect.innerHTML = '<option value="">Selecione o Veterinário...</option>';
         if (unidade && vetsData[unidade]) {
             vetSelect.disabled = false;
@@ -137,6 +151,22 @@
         } else {
             vetSelect.disabled = true;
             vetSelect.innerHTML = '<option value="">Aguardando Unidade...</option>';
+        }
+
+        planoSelect.innerHTML = '<option value="">Selecione o Plano...</option>';
+        if (unidade && planosData[unidade]) {
+            planoSelect.disabled = false;
+            planosData[unidade].forEach(plano => {
+                let opt = document.createElement('option');
+                opt.value = plano; opt.innerHTML = plano;
+                planoSelect.appendChild(opt);
+            });
+        } else {
+            // Se a unidade não tiver planos específicos mapeados, habilita apenas o Particular
+            planoSelect.disabled = false;
+            let opt = document.createElement('option');
+            opt.value = "Particular"; opt.innerHTML = "Particular";
+            planoSelect.appendChild(opt);
         }
     }
 
@@ -166,6 +196,7 @@
             alert("Sucesso! Registro efetuado na base DOK.");
             this.reset();
             document.getElementById('veterinario').disabled = true;
+            document.getElementById('plano').disabled = true;
             btn.innerText = "REGISTRAR ATENDIMENTO"; btn.disabled = false;
         }).catch(err => {
             alert("Erro na conexão.");
