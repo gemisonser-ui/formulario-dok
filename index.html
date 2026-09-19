@@ -14,43 +14,40 @@
         .titulo-doc h2 { margin: 0; font-size: 20px; font-weight: 900; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
         td { border: 1px solid #000; padding: 10px; font-size: 14px; }
+        label.rotulo { display: block; font-weight: bold; margin-bottom: 2px; }
         input, select, textarea { width: 100%; border: none; outline: none; background: transparent; font-size: 14px; box-sizing: border-box; font-family: inherit; }
         select { cursor: pointer; appearance: none; -webkit-appearance: none; }
+        select:disabled { cursor: not-allowed; color: #888; }
         .banner-secao { background: var(--verde-dok); color: white; text-align: center; font-weight: 900; padding: 8px; border: 1px solid #000; text-transform: uppercase; margin-top: 10px; }
         .check-table th { border: 1px solid #000; padding: 8px; background: rgba(0,0,0,0.03); font-size: 12px; text-transform: uppercase; }
         .check-table td { text-align: center; height: 45px; padding: 5px; }
-        
-        /* Cor preta e centralizado para os campos de quantidade */
+
         .input-qtd { text-align: center; font-weight: bold; color: #000000; }
 
-        /* REMOVE as setinhas de todos os campos numéricos por padrão */
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
-
-        /* MOSTRA as setinhas apenas quando o mouse está especificamente SOBRE o campo */
         input[type=number]:hover::-webkit-inner-spin-button,
-        input[type=number]:hover::-webkit-outer-spin-button { 
+        input[type=number]:hover::-webkit-outer-spin-button {
             -webkit-appearance: inner-spin-button;
-            opacity: 1; 
+            opacity: 1;
         }
-
-        /* Para Firefox */
         input[type=number] { -moz-appearance: textfield; }
         input[type=number]:hover { -moz-appearance: number-input; }
 
         .label-texto { display: block; margin-top: 15px; font-weight: bold; font-size: 13px; text-transform: uppercase; color: #555; }
         textarea { height: 60px; border: 1px solid #000; padding: 8px; resize: none; }
         .btn-enviar { background: var(--verde-dok); color: white; border: none; padding: 18px; font-size: 18px; font-weight: bold; cursor: pointer; width: 100%; border-radius: 4px; margin-top: 15px; text-transform: uppercase; transition: 0.3s; }
-        .btn-enviar:hover { background: #3a8e6d; }
+        .btn-enviar:hover:not(:disabled) { background: #3a8e6d; }
+        .btn-enviar:disabled { opacity: 0.6; cursor: not-allowed; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <form id="formClinica">
+    <form id="formClinica" autocomplete="off">
         <div class="header">
             <img src="https://lh3.googleusercontent.com/d/1k2nS1fibAd8eX25SAueMB-fvkoxLMKQS" alt="DOK Hospital" class="logo-oficial">
             <div class="titulo-doc"><h2>Registro de Atendimento</h2></div>
@@ -58,21 +55,24 @@
 
         <table style="margin-bottom: 15px;">
             <tr>
-                <td style="width: 50%;">
-                    <strong>Unidade DOK:</strong>
-                    <select name="unidade" id="unidade" required onchange="atualizarFiltros()">
-                        <option value="">Selecione...</option>
-                        <option value="DOK Guarulhos">DOK Guarulhos</option>
-                        <option value="DOK Maceió">DOK Maceió</option>
-                        <option value="DOK RJ">DOK RJ</option>
-                        <option value="DOK Recife">DOK Recife</option>
-                        <option value="DOK São Luís">DOK São Luís</option>
+                <td style="width: 34%;">
+                    <label class="rotulo" for="unidade">Unidade DOK:</label>
+                    <select autocomplete="off" name="unidade" id="unidade" required disabled onchange="atualizarFiltros()">
+                        <option value="">Carregando...</option>
                     </select>
                 </td>
-                <td style="width: 50%;">
-                    <strong>Veterinário:</strong>
-                    <select name="veterinario" id="veterinario" required disabled>
+                <td style="width: 33%;">
+                    <label class="rotulo" for="veterinario">Veterinário:</label>
+                    <select autocomplete="off" name="veterinario" id="veterinario" required disabled>
                         <option value="">Aguardando Unidade...</option>
+                    </select>
+                </td>
+                <td style="width: 33%;">
+                    <label class="rotulo" for="tipo_consulta">Tipo de Consulta:</label>
+                    <select autocomplete="off" name="tipo_consulta" id="tipo_consulta" required>
+                        <option value="">Selecione...</option>
+                        <option value="Primeira consulta">Primeira consulta</option>
+                        <option value="Consulta retorno">Consulta retorno</option>
                     </select>
                 </td>
             </tr>
@@ -80,15 +80,15 @@
 
         <table>
             <tr>
-                <td style="width: 40%;"><strong>Paciente:</strong> <input type="text" name="paciente" required></td>
-                <td style="width: 25%;"><strong>Peso (kg):</strong> <input type="number" step="0.1" name="peso"></td>
-                <td style="width: 35%;"><strong>Data Atendimento:</strong> <input type="date" name="data_atendimento" required></td>
+                <td style="width: 40%;"><label class="rotulo" for="paciente">Paciente:</label><input autocomplete="off" type="text" id="paciente" name="paciente" required></td>
+                <td style="width: 25%;"><label class="rotulo" for="peso">Peso (kg):</label><input autocomplete="off" type="number" step="0.1" min="0.1" id="peso" name="peso"></td>
+                <td style="width: 35%;"><label class="rotulo" for="data_atendimento">Data Atendimento:</label><input autocomplete="off" type="date" id="data_atendimento" name="data_atendimento" required></td>
             </tr>
             <tr>
-                <td colspan="2"><strong>Tutor:</strong> <input type="text" name="tutor"></td>
+                <td colspan="2"><label class="rotulo" for="tutor">Tutor:</label><input autocomplete="off" type="text" id="tutor" name="tutor"></td>
                 <td>
-                    <strong>Espécie:</strong>
-                    <select name="especie" required>
+                    <label class="rotulo" for="especie">Espécie:</label>
+                    <select autocomplete="off" name="especie" id="especie" required>
                         <option value="">Selecione...</option>
                         <option value="Cão">Cão</option>
                         <option value="Gato">Gato</option>
@@ -97,10 +97,10 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2"><strong>Raça:</strong> <input type="text" name="raca"></td>
+                <td colspan="2"><label class="rotulo" for="raca">Raça:</label><input autocomplete="off" type="text" id="raca" name="raca"></td>
                 <td>
-                    <strong>Plano:</strong>
-                    <select name="plano" id="plano" required disabled>
+                    <label class="rotulo" for="plano">Plano:</label>
+                    <select autocomplete="off" name="plano" id="plano" required disabled>
                         <option value="">Aguardando Unidade...</option>
                     </select>
                 </td>
@@ -116,168 +116,153 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="number" name="cirurgia" class="input-qtd" min="0"></td>
-                    <td><input type="number" name="internacao" class="input-qtd" min="0"></td>
-                    <td><input type="number" name="aplicacao" class="input-qtd" min="0"></td>
-                    <td><input type="number" name="vacina" class="input-qtd" min="0"></td>
-                    <td><input type="number" name="laboratorio" class="input-qtd" min="0"></td>
-                    <td><input type="number" name="imagem" class="input-qtd" min="0"></td>
+                    <td><input autocomplete="off" type="number" name="cirurgia" class="input-qtd" min="0"></td>
+                    <td><input autocomplete="off" type="number" name="internacao" class="input-qtd" min="0"></td>
+                    <td><input autocomplete="off" type="number" name="aplicacao" class="input-qtd" min="0"></td>
+                    <td><input autocomplete="off" type="number" name="vacina" class="input-qtd" min="0"></td>
+                    <td><input autocomplete="off" type="number" name="laboratorio" class="input-qtd" min="0"></td>
+                    <td><input autocomplete="off" type="number" name="imagem" class="input-qtd" min="0"></td>
                 </tr>
             </tbody>
         </table>
 
         <span class="label-texto">Conduta clínica / suspeita diagnóstica:</span>
-        <textarea name="conduta"></textarea>
+        <textarea autocomplete="off" name="conduta"></textarea>
 
         <span class="label-texto">Exames sugeridos:</span>
-        <textarea name="exames_sugeridos"></textarea>
+        <textarea autocomplete="off" name="exames_sugeridos"></textarea>
 
-        <button type="submit" id="btnSubmit" class="btn-enviar">REGISTRAR ATENDIMENTO</button>
+        <button type="submit" id="btnSubmit" class="btn-enviar" disabled>CARREGANDO...</button>
     </form>
 </div>
 
 <script>
+    // URL do deploy do Apps Script (Web App). Mantenha atualizada após cada novo deploy.
     const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbzwVOjLcWg5RtpbPEswyPvF8PPPtlmJiXx9s_3ITTptfgXIWaWytYNTUZbq3i9w3Rxb/exec";
 
-    const vetsData = {
-        "DOK Guarulhos": [
-"DR FABIO DA SILVA CHAVIER",
-"DRA ANA LUIZA ALVES",
-"NICOLLE CHAVES DOS SANTOS SILVA",
-"DRA EMILLY VITTORIA RODRIGUES DE SOUZA",
-"DRA NARA ELENA",
-"Yasmin Oliveira da Costa"
-],
+    // Deve ser IDÊNTICO ao TOKEN_FORMULARIO definido no Code.gs.
+    // É uma barreira básica contra spam automatizado, não uma segurança real
+    // (qualquer pessoa pode ler este valor no código-fonte da página).
+    const TOKEN_FORMULARIO = "CiBlDfleHijUQjmD_qJXqMZ0gk7NwaQA";
 
-        "DOK Maceió": ["DRA ALANA MARIA TAVARES",
-"DRA ALICE TORRES BARROS",
-"DRA KATIA CRISTINA MOREIRA",
-"DRA MARIA CLARA CARLOS DA SILVA",
-"JESSICA LAYANE",
-"ELYSE MELO",
-"Vitoria Cristina Silva",
-"INGRID SOUZ",
-"Wellyda Lourranny",
-"DRA AMANDA DANYELA SANTOS DE MENDONÇA"
-],
+    let configData = {}; // preenchido dinamicamente a partir da aba "Config" da planilha
 
-        "DOK RJ": ["DRA JEANE CAROLINE CORREA PETIT",
-"NICHOLAS MEDEIROS",
-"DRA ANA CAROLINA LOPES",
-"DRA DEBORAH DOS SANTOS",
-"DRA LIGIA SOUZA ASSUMPCAO",
-"DR LEONARDO OLIVEIRA",
-"DRA ALANA LUIZA DA SILVA SANTOS",
-"DR MARCELO MAZZA",
-"DRA MARCELLA SEIXAS DA SILVA",
-"DRA CLARISSA MARTINS",
-"DR GUSTAVO PARREIRAS",
-"JULIA NABUCO",
-"DRA ANDRESSA MALTA BRAULE",
-"PRISCYLLA MARTINS RIBEIRO DA ROCHA VIEIRA",
-"LETICIA SANTOS CARNEIRO TEIXEIRA"
+    function definirDataPadrao() {
+        const agora = new Date();
+        const offsetMs = agora.getTimezoneOffset() * 60000;
+        const dataLocal = new Date(agora.getTime() - offsetMs);
+        document.getElementById('data_atendimento').value = dataLocal.toISOString().split('T')[0];
+    }
 
-],
+    function popularUnidades() {
+        const unidadeSelect = document.getElementById('unidade');
+        const unidades = Object.keys(configData).sort();
+        unidadeSelect.innerHTML = '<option value="">Selecione...</option>';
+        unidades.forEach(function (u) {
+            const opt = document.createElement('option');
+            opt.value = u;
+            opt.innerHTML = u;
+            unidadeSelect.appendChild(opt);
+        });
+        unidadeSelect.disabled = false;
+    }
 
-        "DOK Recife": ["DRA JULIANA PLUBIA CORDEIRO",
-"DRA ANNIE CAROLINE TENORIO FERREIRA DE LIMA",
-"DRA KALININ PACHECO DOS SANTOS SILVA",
-"DRA LUIZA CARVALHO DE SOARES",
-"DR NELSON VIEIRA DOS SANTOS NETO",
-"ANA HELLEN ANDRADE FERREIRA",
-"Elias Severino de Oliveira Junior"
-],
+    function carregarConfig() {
+        const btn = document.getElementById('btnSubmit');
+        btn.disabled = true;
+        btn.innerText = "CARREGANDO CONFIGURAÇÕES...";
 
-        "DOK São Luís": ["DRA JAYANNA MAIA",
-"DRA ALINE JOANE BRITO PADILHA",
-"DR CRISTIAN DE OLIVEIRA ANDRADE SILVEIRA",
-"DRA VITORIA CRISTINA FRAZAO FEITOSA",
-"DR. PEDRO HENRIQUE SANTOS AGUIAR",
-"DRA BEATRIZ DE AGUIAR NEVES SILVA",
-"DRA VALERIA GONÇALVES SOARES",
-"DRA. ZAINA HOLANDA",
-"DRA. ANA CLARA SANTOS CARVALHO",
-"DRA. TEREZA PAPALEO",
-"DR. JOÃO MARCOS"
-]
-    };
-
-
-    const planosData = {
-        "DOK Guarulhos": ["Au happy", "Eu pet", "Dog life", "Pet love", "Pet life", "Particular"],
-        "DOK São Luís": ["Petlove", "Pet mais vida", "Particular"],
-        "DOK Recife": ["Pet Top", "Eu Pet", "Particular"],
-        "DOK Maceió": ["Petlove", "Care Saúde Animal", "Pet Top", "Eu Pet", "Particular"],
-        "DOK RJ": ["Particular"]
-    };
+        fetch(URL_APPS_SCRIPT)
+            .then(function (res) { return res.json(); })
+            .then(function (resultado) {
+                if (resultado.status !== 'success') {
+                    throw new Error(resultado.message || 'Erro ao carregar configurações.');
+                }
+                configData = resultado.data;
+                popularUnidades();
+                btn.disabled = false;
+                btn.innerText = "REGISTRAR ATENDIMENTO";
+            })
+            .catch(function (err) {
+                console.error(err);
+                btn.innerText = "ERRO AO CARREGAR — RECARREGUE A PÁGINA";
+                alert("Não foi possível carregar veterinários e planos. Recarregue a página.\nDetalhe: " + err.message);
+            });
+    }
 
     function atualizarFiltros() {
         const unidade = document.getElementById('unidade').value;
         const vetSelect = document.getElementById('veterinario');
         const planoSelect = document.getElementById('plano');
+        const dadosUnidade = configData[unidade];
 
         vetSelect.innerHTML = '<option value="">Selecione o Veterinário...</option>';
-        if (unidade && vetsData[unidade]) {
+        planoSelect.innerHTML = '<option value="">Selecione o Plano...</option>';
+
+        if (unidade && dadosUnidade) {
             vetSelect.disabled = false;
-            vetsData[unidade].forEach(nome => {
-                let opt = document.createElement('option');
-                opt.value = nome; opt.innerHTML = nome;
+            (dadosUnidade.veterinarios || []).forEach(function (nome) {
+                const opt = document.createElement('option');
+                opt.value = nome;
+                opt.innerHTML = nome;
                 vetSelect.appendChild(opt);
+            });
+
+            planoSelect.disabled = false;
+            const planos = dadosUnidade.planos && dadosUnidade.planos.length ? dadosUnidade.planos : ["Particular"];
+            planos.forEach(function (plano) {
+                const opt = document.createElement('option');
+                opt.value = plano;
+                opt.innerHTML = plano;
+                planoSelect.appendChild(opt);
             });
         } else {
             vetSelect.disabled = true;
             vetSelect.innerHTML = '<option value="">Aguardando Unidade...</option>';
-        }
-
-        planoSelect.innerHTML = '<option value="">Selecione o Plano...</option>';
-        if (unidade && planosData[unidade]) {
-            planoSelect.disabled = false;
-            planosData[unidade].forEach(plano => {
-                let opt = document.createElement('option');
-                opt.value = plano; opt.innerHTML = plano;
-                planoSelect.appendChild(opt);
-            });
-        } else {
-            planoSelect.disabled = false;
-            let opt = document.createElement('option');
-            opt.value = "Particular"; opt.innerHTML = "Particular";
-            planoSelect.appendChild(opt);
+            planoSelect.disabled = true;
+            planoSelect.innerHTML = '<option value="">Aguardando Unidade...</option>';
         }
     }
 
-    document.getElementById('formClinica').addEventListener('submit', function(e) {
+    document.getElementById('formClinica').addEventListener('submit', function (e) {
         e.preventDefault();
         const btn = document.getElementById('btnSubmit');
-        btn.innerText = "Sincronizando..."; btn.disabled = true;
+        btn.innerText = "Sincronizando...";
+        btn.disabled = true;
 
         const formData = new FormData(this);
-        const params = new URLSearchParams();
-        
-        formData.forEach((value, key) => {
-            const el = this.querySelector(`[name="${key}"]`);
-            if (el && el.type === 'number' && (key === 'cirurgia' || key === 'internacao' || key === 'aplicacao' || key === 'vacina' || key === 'laboratorio' || key === 'imagem')) {
-                params.append(key, value === "" ? 0 : value);
-            } else {
-                params.append(key, value);
-            }
-        });
+        const dados = { token: TOKEN_FORMULARIO };
+        formData.forEach(function (value, key) { dados[key] = value; });
 
         fetch(URL_APPS_SCRIPT, {
             method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: params.toString()
-        }).then(() => {
-            alert("Sucesso! Registro efetuado na base DOK.");
-            this.reset();
-            document.getElementById('veterinario').disabled = true;
-            document.getElementById('plano').disabled = true;
-            btn.innerText = "REGISTRAR ATENDIMENTO"; btn.disabled = false;
-        }).catch(err => {
-            alert("Erro na conexão.");
-            btn.innerText = "TENTAR NOVAMENTE"; btn.disabled = false;
-        });
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // evita preflight CORS no Apps Script
+            body: JSON.stringify(dados)
+        })
+            .then(function (res) { return res.json(); })
+            .then(function (resultado) {
+                if (resultado.status !== 'success') {
+                    throw new Error(resultado.message || 'Erro desconhecido ao registrar.');
+                }
+                alert("Sucesso! Registro efetuado na base DOK.");
+                document.getElementById('formClinica').reset();
+                definirDataPadrao();
+                document.getElementById('veterinario').disabled = true;
+                document.getElementById('veterinario').innerHTML = '<option value="">Aguardando Unidade...</option>';
+                document.getElementById('plano').disabled = true;
+                document.getElementById('plano').innerHTML = '<option value="">Aguardando Unidade...</option>';
+                btn.innerText = "REGISTRAR ATENDIMENTO";
+                btn.disabled = false;
+            })
+            .catch(function (err) {
+                alert("Erro ao registrar: " + err.message + "\nO registro NÃO foi salvo. Tente novamente.");
+                btn.innerText = "TENTAR NOVAMENTE";
+                btn.disabled = false;
+            });
     });
+
+    definirDataPadrao();
+    carregarConfig();
 </script>
 
 </body>
